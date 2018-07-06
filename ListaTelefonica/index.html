@@ -1,0 +1,80 @@
+<html ng-app="ListaTelefonicaApp">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Teste Angular</title>
+    <style>
+        .jumbotron {
+            width: 400px;
+            margin-top: 20px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+        .form-control {
+            margin-bottom: 5px;
+        }
+
+        .selecionado {
+            background-color: yellow;
+        }
+
+        .negrito {
+            font-weight: bold;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="jumbotron" ng-controller="ListaTelefonicaController">
+        <h3>{{titulo}}</h3>
+        <table ng-show="contatos.length > 0" class="table table">
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Operadora</th>
+            </tr>
+            <tr ng-class="{' selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+                <td>
+                    <input type="checkbox" ng-model="contato.selecionado" />
+                </td>
+                <td>{{contato.nome}}</td>
+                <td>{{contato.telefone}}</td>
+                <td>{{contato.operadora.nome}}</td>
+                <td>
+                    <div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"></div>
+                </td>
+            </tr>
+        </table>
+        <hr />
+        <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome" />
+        <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone" />
+        <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+            <option value="">Selecione uma operadora</option>
+        </select>
+        <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contato</button>
+        <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="isContatoSelecionado(contatos)">Apagar Contatos</button>
+
+    </div>
+    <div ng-include="'footer.html'"></div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="app/lista-telefonica.module.js"></script>
+    <script src="app/lista-telefonica.controller.js"></script>
+
+</body>
+
+</html>
