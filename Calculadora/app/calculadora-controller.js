@@ -11,17 +11,23 @@ function CalculadoraController($scope) {
 
     $scope.Calcular = function (num1, num2, calculo) {
         if (!num1 || !num2) {
-            return $scope.resultado = "VOCÊ DEVE INFORMAR OS DOIS CAMPOS PARA EFETUAR O CÁLCULO";
+            $scope.resultado = "VOCÊ DEVE INFORMAR OS DOIS CAMPOS PARA EFETUAR O CÁLCULO";
+        } else if (isNaN(num1) || isNaN(num2)) {
+            $scope.resultado = "O VALOR INFORMADO DEVE SER NUMÉRICO";
+        } else if (calculo == false) {
+            $scope.resultado = "POR FAVOR, SELECIONE UMA OPERAÇÃO";
         }
-        if (calculo == "adicao") {
-            return $scope.resultado = (parseInt(num1) + parseInt(num2));
+        else {
+            if (calculo == "adicao") {
+                $scope.resultado = Math.abs((parseInt(num1) + parseInt(num2)));
+            } else {
+                $scope.resultado = Math.abs((parseInt(num1) - parseInt(num2)));
+            }
         }
-        return $scope.resultado = (parseInt(num1) - parseInt(num2));
-        
-
 
     };
-
-
 };
+
+
+
 
