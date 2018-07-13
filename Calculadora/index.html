@@ -29,11 +29,11 @@
         <input class="form-control" type="text" ng-model="num1" placeholder="Número 1" />
         <input class="form-control" type="text" ng-model="num2" placeholder="Número 2" />
         <label>
-            <input type="radio" ng-model="calculo" name="radio" value="adicao">Adição
+            <input type="radio" ng-model="calculo" name="radio" value="adicao" ng-change="Calcular(num1, num2, calculo)">Adição
         </label>
 
         <label>
-            <input type="radio" ng-model="calculo" name="radio" value="subtracao">Subtração
+            <input type="radio" ng-model="calculo" name="radio" value="subtracao" ng-change="Calcular(num1, num2, calculo)">Subtração
         </label>
 
         <button class="btn btn-primary btn-block" ng-click="Calcular(num1, num2, calculo)">Calcular</button>

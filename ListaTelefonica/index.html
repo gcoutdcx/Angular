@@ -6,7 +6,7 @@
     <title>Lista Telefônica - Angular</title>
     <style>
         .jumbotron {
-            width: 400px;
+            width: 600px;
             margin-top: 20px;
             text-align: center;
             margin-left: auto;
@@ -30,31 +30,34 @@
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
 
 </head>
 
 <body>
     <div style="background:transparent !important" class="jumbotron" ng-controller="ListaTelefonicaController">
         <h3>{{titulo}}</h3>
+        <input class="form-control" type="text" ng-model="busca" placeholder="O que você deseja pesquisar?" />
         <table ng-show="contatos.length > 0" class="table table">
             <tr>
                 <th></th>
-                <th>Nome</th>
-                <th>Telefone</th>
+                <th>
+                    <a href="" ng-click="ordenarPor('nome')">Nome</a>
+                </th>
+                <th>
+                    <a href="" ng-click="ordenarPor('telefone')">Telefone</a>
+                </th>
                 <th>Operadora</th>
+                <th>Data</th>
             </tr>
-            <tr ng-class="{' selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+            <tr ng-class="{' selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:busca | orderBy: criterioDeOrdenacao:direcaoDaOrdenacao">
                 <td>
                     <input type="checkbox" ng-model="contato.selecionado" />
                 </td>
                 <td>{{contato.nome}}</td>
                 <td>{{contato.telefone}}</td>
-                <td>{{contato.operadora.nome}}</td>
-                <td>
-                    <div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"></div>
-                </td>
+                <td>{{contato.operadora.nome | lowercase}}</td>
+                <td>{{contato.data | date:'EEE dd/MM/yyyy'}}</td>
             </tr>
         </table>
         <hr />
@@ -64,7 +67,7 @@
             />
             <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true"
                 ng-pattern="/^\d{4,5}-\d{4}$/" />
-            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome + ' ( ' + (operadora.preco | currency) + ' )' for operadora in operadoras | orderBy:'nome'">
                 <option value="">Selecione uma operadora</option>
             </select>
         </form>
@@ -88,9 +91,9 @@
     </div>
     <div ng-include="'footer.html'"></div>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-        crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="lib/bootstrap/bootstrap.min.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-locale_pt-br.js"></script>
     <script src="app/lista-telefonica.module.js"></script>
     <script src="app/lista-telefonica.controller.js"></script>
 
