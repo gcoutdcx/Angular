@@ -6,26 +6,30 @@ function ListaTelefonicaController($scope, $http) {
     $scope.titulo = "Lista Telefônica";
     $scope.classe1 = "selecionado";
     $scope.classe2 = "negrito";
-
     $scope.contatos = [];
-
-    $scope.operadoras = [
-        { nome: "Oi", codigo: "14", categoria: "Celular", preco: 2 },
-        { nome: "Vivo", codigo: "15", categoria: "Celular", preco: 3 },
-        { nome: "Tim", codigo: "41", categoria: "Celular", preco: 2 },
-        { nome: "GVT", codigo: "25", categoria: "Fixo", preco: 1 },
-        { nome: "Embratel", codigo: "21", categoria: "Fixo", preco: 3 },
-    ];
+    $scope.operadoras = [];
 
     var carregarContatos = function () {
-
+        $http.get("http://localhost:3412/contatos").success(function (data, status) {
+            $scope.contatos = data;
+        }).error(function (data, status) {
+            $scope.message = "Aconteceu um problema: " + data;
+        });
     };
 
+    var carregarOperadoras = function () {
+        $http.get("http://localhost:3412/operadoras").success(function (data, status) {
+            $scope.operadoras = data;
+        });
+    };
 
     $scope.adicionarContato = function (contato) {
-        $scope.contatos.push(angular.copy(contato));
-        delete $scope.contato;
-        $scope.contatoForm.$setPristine();
+        contato.data = new Date();
+        $http.post("http://localhost:3412/contatos", contato).success(function (data) {
+            delete $scope.contato;
+            $scope.contatoForm.$setPristine();
+            carregarContatos();
+        });
     };
 
     $scope.apagarContatos = function (contatos) {
@@ -44,4 +48,7 @@ function ListaTelefonicaController($scope, $http) {
         $scope.criterioDeOrdenacao = campo;
         $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
     };
+
+    carregarContatos();
+    carregarOperadoras();
 };

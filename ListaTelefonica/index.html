@@ -4,38 +4,15 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Lista Telefônica - Angular</title>
-    <style>
-        .jumbotron {
-            width: 600px;
-            margin-top: 20px;
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .table {
-            margin-top: 20px;
-        }
-
-        .form-control {
-            margin-bottom: 5px;
-        }
-
-        .selecionado {
-            background-color: rgba(198, 210, 211, 0.842);
-        }
-
-        .negrito {
-            font-weight: bold;
-        }
-    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
 
 </head>
 
 <body>
     <div style="background:transparent !important" class="jumbotron" ng-controller="ListaTelefonicaController">
+        {{message}}
         <h3>{{titulo}}</h3>
         <input class="form-control" type="text" ng-model="busca" placeholder="O que você deseja pesquisar?" />
         <table ng-show="contatos.length > 0" class="table table">
@@ -89,7 +66,7 @@
         <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="isContatoSelecionado(contatos)">Apagar Contatos</button>
 
     </div>
-    <div ng-include="'footer.html'"></div>
+    <div ng-include="'view/footer.html'"></div>
 
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular/angular.js"></script>
