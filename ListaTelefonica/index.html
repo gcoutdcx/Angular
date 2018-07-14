@@ -7,17 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/ui.css">
 
 </head>
 
 <body>
     <div style="background:transparent !important" class="jumbotron" ng-controller="ListaTelefonicaController">
-        {{message}}
         <h3>{{titulo}}</h3>
+
+        <ui-alert title="Ops, aconteceu um problema!" message="error"></ui-alert>
+
         <input class="form-control" type="text" ng-model="busca" placeholder="O que você deseja pesquisar?" />
         <table ng-show="contatos.length > 0" class="table table">
             <tr>
                 <th></th>
+                <th>Serial</th>
                 <th>
                     <a href="" ng-click="ordenarPor('nome')">Nome</a>
                 </th>
@@ -31,9 +35,10 @@
                 <td>
                     <input type="checkbox" ng-model="contato.selecionado" />
                 </td>
-                <td>{{contato.nome}}</td>
+                <td>{{contato.serial}}</td>
+                <td>{{contato.nome | name | ellipsis:12}}</td>
                 <td>{{contato.telefone}}</td>
-                <td>{{contato.operadora.nome | lowercase}}</td>
+                <td>{{contato.operadora.nome}}</td>
                 <td>{{contato.data | date:'EEE dd/MM/yyyy'}}</td>
             </tr>
         </table>
@@ -68,11 +73,32 @@
     </div>
     <div ng-include="'view/footer.html'"></div>
 
+    <!-- LIBRARIES -->
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular/angular-locale_pt-br.js"></script>
-    <script src="app/lista-telefonica.module.js"></script>
-    <script src="app/lista-telefonica.controller.js"></script>
+
+    <!-- MODULE -->
+    <script src="app/modules/lista-telefonica.module.js"></script>
+
+    <!-- CONTROLLER -->
+    <script src="app/controllers/lista-telefonica.controller.js"></script>
+
+    <!-- CONFIG -->
+    <script src="app/config/configValue.js"></script>
+    <script src="app/config/serialGeneratorConfig.js"></script>
+
+    <!-- SERVICE -->
+    <script src="app/services/contatosAPIService.js"> </script>
+    <script src="app/services/operadorasAPIService.js"></script>
+    <script src="app/services/serialGeneratorService.js"></script>
+
+    <!-- FILTER -->
+    <script src="app/filters/nameFilter.js"></script>
+    <script src="app/filters/ellipsisFilter.js"></script>
+
+    <!-- DIRECTIVE -->
+    <script src="app/directives/uiAlertDirective.js"></script>
 
 </body>
 
