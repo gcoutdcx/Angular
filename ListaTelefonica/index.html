@@ -12,93 +12,41 @@
 </head>
 
 <body>
-    <div style="background:transparent !important" class="jumbotron" ng-controller="ListaTelefonicaController">
-        <h3>{{titulo}}</h3>
-
-        <ui-alert title="Ops, aconteceu um problema!" message="error"></ui-alert>
-
-        <input class="form-control" type="text" ng-model="busca" placeholder="O que você deseja pesquisar?" />
-        <table ng-show="contatos.length > 0" class="table table">
-            <tr>
-                <th></th>
-                <th>Serial</th>
-                <th>
-                    <a href="" ng-click="ordenarPor('nome')">Nome</a>
-                </th>
-                <th>
-                    <a href="" ng-click="ordenarPor('telefone')">Telefone</a>
-                </th>
-                <th>Operadora</th>
-                <th>Data</th>
-            </tr>
-            <tr ng-class="{' selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:busca | orderBy: criterioDeOrdenacao:direcaoDaOrdenacao">
-                <td>
-                    <input type="checkbox" ng-model="contato.selecionado" />
-                </td>
-                <td>{{contato.serial}}</td>
-                <td>{{contato.nome | name | ellipsis:12}}</td>
-                <td>{{contato.telefone}}</td>
-                <td>{{contato.operadora.nome}}</td>
-                <td>{{contato.data | date:'EEE dd/MM/yyyy'}}</td>
-            </tr>
-        </table>
-        <hr />
-
-        <form name="contatoForm">
-            <input class="form-control" type="text" ng-model="contato.nome" name="nome" placeholder="Nome" ng-required="true" ng-minlength="10"
-            />
-            <input class="form-control" type="text" ng-model="contato.telefone" name="telefone" placeholder="Telefone" ng-required="true"
-                ng-pattern="/^\d{4,5}-\d{4}$/" />
-            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome + ' ( ' + (operadora.preco | currency) + ' )' for operadora in operadoras | orderBy:'nome'">
-                <option value="">Selecione uma operadora</option>
-            </select>
-        </form>
-
-        <div ng-show="contatoForm.nome.$error.required && contatoForm.nome.$dirty" class="alert alert-danger">
-            Por favor, preencha o campo nome.
-        </div>
-        <div ng-show="contatoForm.nome.$error.minlength" class="alert alert-danger">
-            O campo nome deve ter no mínimo 10 caracteres.
-        </div>
-        <div ng-show="contatoForm.telefone.$error.required && contatoForm.telefone.$dirty" class="alert alert-danger">
-            Por favor, preencha o campo telefone.
-        </div>
-        <div ng-show="contatoForm.telefone.$error.pattern" class="alert alert-danger">
-            O campo telefone deve ter o formato 00000-0000.
-        </div>
-
-        <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="contatoForm.$invalid">Adicionar Contato</button>
-        <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="isContatoSelecionado(contatos)">Apagar Contatos</button>
-
-    </div>
+    <div ng-view="view/contatos.html"></div>
     <div ng-include="'view/footer.html'"></div>
 
     <!-- LIBRARIES -->
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular/angular-locale_pt-br.js"></script>
+    <script src="lib/angular/angular-route.js"></script>
+
+    <!--CASO FOR UTILIZAR EM MAIS DE UM LUGAR, CRIA OUTROS MODULOS-->
+    <script src="lib/serialGenerator/serialGenerator.js"></script>
+    <script src="lib/ui/uiAlert.js"></script>
 
     <!-- MODULE -->
     <script src="app/modules/lista-telefonica.module.js"></script>
 
     <!-- CONTROLLER -->
     <script src="app/controllers/lista-telefonica.controller.js"></script>
+    <script src="app/controllers/novo-contato.controller.js"></script>
+    <script src="app/controllers/detalhes-contato.controller.js"></script>
 
     <!-- CONFIG -->
     <script src="app/config/configValue.js"></script>
     <script src="app/config/serialGeneratorConfig.js"></script>
-
+    <script src="app/config/routeConfig.js"></script>
     <!-- SERVICE -->
     <script src="app/services/contatosAPIService.js"> </script>
     <script src="app/services/operadorasAPIService.js"></script>
-    <script src="app/services/serialGeneratorService.js"></script>
 
     <!-- FILTER -->
     <script src="app/filters/nameFilter.js"></script>
     <script src="app/filters/ellipsisFilter.js"></script>
 
     <!-- DIRECTIVE -->
-    <script src="app/directives/uiAlertDirective.js"></script>
+    <script src="app/directives/uiDateDirective.js"></script>
 
 </body>
 
