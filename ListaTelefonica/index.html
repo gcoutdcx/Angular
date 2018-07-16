@@ -12,9 +12,15 @@
 </head>
 
 <body>
-    <div ng-view="view/contatos.html"></div>
-    <div ng-include="'view/footer.html'"></div>
+    <div style="background:transparent !important" class="jumbotron" ng-show="loading">
+        <h5>Carregando, por favor aguarde...</h5>
+    </div>
 
+    <div ng-hide="loading">
+        <div ng-view="view/contatos.html"></div>
+        <div ng-include="'view/footer.html'"></div>
+    </div>
+    
     <!-- LIBRARIES -->
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular/angular.js"></script>
@@ -37,6 +43,7 @@
     <script src="app/config/configValue.js"></script>
     <script src="app/config/serialGeneratorConfig.js"></script>
     <script src="app/config/routeConfig.js"></script>
+    <script src="app/config/interceptorsConfig.js"></script>
     <!-- SERVICE -->
     <script src="app/services/contatosAPIService.js"> </script>
     <script src="app/services/operadorasAPIService.js"></script>
@@ -47,6 +54,11 @@
 
     <!-- DIRECTIVE -->
     <script src="app/directives/uiDateDirective.js"></script>
+
+    <!-- INTERCEPTOR -->
+    <script src="app/interceptors/timestampInterceptor.js"></script>
+    <script src="app/interceptors/errorInterceptor.js"></script>
+    <script src="app/interceptors/loadingInterceptor.js"></script>
 
 </body>
 

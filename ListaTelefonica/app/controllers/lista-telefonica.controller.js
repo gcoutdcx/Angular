@@ -7,8 +7,24 @@ function ListaTelefonicaController($scope, contatos, operadoras, serialGenerator
     $scope.classe2 = "negrito";
     $scope.title = "";
 
-    $scope.contatos = contatos.data;
-    $scope.operadoras = operadoras.data;
+    var inicializar = function () {
+        $scope.contatos = contatos.data;
+        $scope.operadoras = operadoras.data;
+        calcularImpostos($scope.contatos);
+        generateSerial(contatos.data);
+    };
+
+    var calcularImpostos = function (contatos) {
+        contatos.forEach(function (contato) {
+            contato.operadora.precoComImposto = calcularImposto(contato.operadora.preco);
+        });
+    };
+
+    var calcularImposto = function (preco) {
+        var imposto = 1.4;
+        return preco * imposto;
+    };
+
 
     var generateSerial = function (contatos) {
         contatos.forEach(function (item) {
@@ -20,7 +36,7 @@ function ListaTelefonicaController($scope, contatos, operadoras, serialGenerator
         serial = serialGenerator.generate();
         contato.serial = serial;
         contato.data = new Date();
-        contatosAPI.saveContato(contato).success(function (data) {
+        contatosAPI.saveContato(contato).then(function (data) {
             delete $scope.contato;
             $scope.contatoForm.$setPristine();
             contatos.data;
@@ -31,10 +47,11 @@ function ListaTelefonicaController($scope, contatos, operadoras, serialGenerator
         $scope.contatos = contatos.filter(function (contato) {
             if (!contato.selecionado) return contato;
         });
+        $scope.verificarContatoSelecionado($scope.contatos);
     };
 
-    $scope.isContatoSelecionado = function (contatos) {
-        return contatos.some(function (contato) {
+    $scope.verificarContatoSelecionado = function (contatos) {
+        $scope.hasContatoSelecionado = contatos.some(function (contato) {
             return contato.selecionado;
         });
     };
@@ -44,5 +61,5 @@ function ListaTelefonicaController($scope, contatos, operadoras, serialGenerator
         $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
     };
 
-    generateSerial(contatos.data);
+    inicializar();
 };

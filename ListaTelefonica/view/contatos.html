@@ -2,7 +2,7 @@
     <h3>{{titulo}}</h3>
     <div ui-alert></div>
 
-    <input class="form-control" type="text" ng-model="busca" placeholder="O que você deseja pesquisar?" />
+    <input class="form-control" type="text" ng-model="busca" ng-model-options="{updateOn: 'default blur', debounce:{default: 500, blur: 0}}" placeholder="O que você deseja pesquisar?" />
     <table ng-show="contatos.length > 0" class="table table">
         <tr>
             <th></th>
@@ -14,21 +14,24 @@
                 <a href="" ng-click="ordenarPor('telefone')">Telefone</a>
             </th>
             <th>Operadora</th>
+            <th>Preço</th>
             <th>Data</th>
         </tr>
         <tr ng-class="{' selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter:busca | orderBy: criterioDeOrdenacao:direcaoDaOrdenacao">
             <td>
-                <input type="checkbox" ng-model="contato.selecionado" />
+                <input type="checkbox" ng-model="contato.selecionado" ng-click="verificarContatoSelecionado(contatos)" />
             </td>
             <td>{{contato.serial}}</td>
-            <td><a href="#/detalhesContato/{{contato.id}}">{{contato.nome | name | ellipsis:12}}</a></td>
+            <td><a href="#!/detalhesContato/{{contato.id}}">{{contato.nome | name | ellipsis:12}}</a></td>
             <td>{{contato.telefone}}</td>
             <td>{{contato.operadora.nome}}</td>
+            <td>{{contato.operadora.precoComImposto | currency}}</td>
             <td>{{contato.data | date:'EEE dd/MM/yyyy'}}</td>
         </tr>
     </table>
     <hr />
 
-    <a class="btn btn-primary btn-block" href="#/novoContato">Novo Contato</a>
+    <a class="btn btn-primary btn-block" href="#!/novoContato">Novo Contato</a>
+    <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="hasContatoSelecionado">Apagar Contatos</button>
 
 </div>
