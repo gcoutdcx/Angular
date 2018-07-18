@@ -1,0 +1,90 @@
+<div ng-include="'view/_nav.html'"></div>
+<div class="container">
+    <hr>
+    <div class="row">
+        <br>
+        <input class="form-control" type="text" ng-model="busca.nome" placeholder="O que você deseja pesquisar?">
+    </div>
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Nota 1</th>
+                    <th>Nota 2</th>
+                    <th>Nota 3</th>
+                    <th>Média</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="aluno in alunos | filter:busca">
+                    <td>{{aluno.nome}}</td>
+                    <td>{{aluno.email}}</td>
+                    <td>{{aluno.nota1}}</td>
+                    <td>{{aluno.nota2}}</td>
+                    <td>{{aluno.nota3}}</td>
+                    <td>{{aluno.media}}</td>
+                    <td>
+                        <button ng-click="editarAluno(aluno)" class="btn btn-info">Editar</button>
+                    </td>
+                    <td>
+                        <button ng-click="deletarAluno(aluno)" class="btn btn-danger">Excluir</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <button type="button" ng-click="abreAddAluno()" class="btn btn-primary">Adicionar</button>
+    </div>
+
+
+    <div class="modal" id="modal2" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" ng-if="!editando">Adicionar Aluno</h4>
+                    <h4 class="modal-title" ng-if="editando">Editar Aluno</h4>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Preencha os dados do Aluno</p>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" ng-model="aluno.nome" placeholder="Nome">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="email" class="form-control" ng-model="aluno.email" placeholder="E-mail">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <input type="number" class="form-control" ng-model="aluno.nota1" placeholder="Nota 1">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="number" class="form-control" ng-model="aluno.nota2" placeholder="Nota 2">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="number" class="form-control" ng-model="aluno.nota3" placeholder="Nota 3">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button ng-if="!editando" ng-click="addAluno(aluno)" type="button" class="btn btn-primary">Adicionar</button>
+                    <button ng-if="editando" ng-click="saveAluno(aluno)" type="button" class="btn btn-primary">Salvar</button>
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
