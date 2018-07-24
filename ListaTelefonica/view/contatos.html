@@ -22,7 +22,8 @@
                 <input type="checkbox" ng-model="contato.selecionado" ng-click="verificarContatoSelecionado(contatos)" />
             </td>
             <td>{{contato.serial}}</td>
-            <td><a href="#!/detalhesContato/{{contato.id}}">{{contato.nome | name | ellipsis:12}}</a></td>
+            <td><a ng-href="javascript:void(0);" ng-click="detalheContato(contato.id)">{{contato.nome | name | ellipsis:12}}</a></td>
+            <!-- <td><a href="#!/detalhesContato/{{contato.id}}">{{contato.nome | name | ellipsis:12}}</a></td> -->
             <td>{{contato.telefone}}</td>
             <td>{{contato.operadora.nome}}</td>
             <td>{{contato.operadora.precoComImposto | currency}}</td>
@@ -31,7 +32,7 @@
     </table>
     <hr />
 
-    <a class="btn btn-primary btn-block" href="#!/novoContato">Novo Contato</a>
+    <a class="btn btn-primary btn-block" ui-sref="novoContato">Novo Contato</a>
     <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-show="hasContatoSelecionado">Apagar Contatos</button>
 
 </div>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Lista Telefônica - Angular</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <link rel="stylesheet" type="text/css" href="css/ui.css">
 
@@ -17,15 +17,17 @@
     </div>
 
     <div ng-hide="loading">
-        <div ng-view="view/contatos.html"></div>
+        <div ui-view></div>
         <div ng-include="'view/footer.html'"></div>
     </div>
     
     <!-- LIBRARIES -->
-    <script src="lib/bootstrap/bootstrap.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular/angular-locale_pt-br.js"></script>
     <script src="lib/angular/angular-route.js"></script>
+    <script src="node_modules/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
 
     <!--CASO FOR UTILIZAR EM MAIS DE UM LUGAR, CRIA OUTROS MODULOS-->
     <script src="lib/serialGenerator/serialGenerator.js"></script>

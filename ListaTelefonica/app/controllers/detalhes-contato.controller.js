@@ -1,7 +1,7 @@
 angular.module('ListaTelefonicaApp')
     .controller('DetalhesContatoController', DetalhesContatoController);
 
-function DetalhesContatoController($scope, $routeParams, contato) {
+function DetalhesContatoController($scope, contato) {
     $scope.titulo = "Detalhes";
     $scope.contato = contato.data;
 };

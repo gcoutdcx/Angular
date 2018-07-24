@@ -1,7 +1,7 @@
 angular.module('ListaTelefonicaApp')
     .controller('ListaTelefonicaController', ListaTelefonicaController);
 
-function ListaTelefonicaController($scope, contatos, operadoras, serialGenerator) {
+function ListaTelefonicaController($scope, contatos, operadoras, serialGenerator, $state) {
     $scope.titulo = "Lista Telefônica";
     $scope.classe1 = "selecionado";
     $scope.classe2 = "negrito";
@@ -59,6 +59,12 @@ function ListaTelefonicaController($scope, contatos, operadoras, serialGenerator
     $scope.ordenarPor = function (campo) {
         $scope.criterioDeOrdenacao = campo;
         $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
+    };
+
+    $scope.detalheContato = function (id){
+        $state.go("detalheContato", {
+            id: id
+        });
     };
 
     inicializar();

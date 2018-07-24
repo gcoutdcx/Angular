@@ -1,5 +1,8 @@
-angular.module('ListaTelefonicaApp').config(function ($routeProvider) {
-    $routeProvider.when("/contatos", {
+angular.module('ListaTelefonicaApp').config(function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/contatos");
+
+    $stateProvider.state("contatos", {
+        url: "/contatos",
         templateUrl: "view/contatos.html",
         controller: "ListaTelefonicaController",
         resolve: {
@@ -10,8 +13,8 @@ angular.module('ListaTelefonicaApp').config(function ($routeProvider) {
                 return operadorasAPI.getOperadoras();
             }
         }
-    });
-    $routeProvider.when("/novoContato", {
+    }).state("novoContato", {
+        url: "/novoContato",
         templateUrl: "view/novoContato.html",
         controller: "NovoContatoController",
         resolve: {
@@ -19,18 +22,21 @@ angular.module('ListaTelefonicaApp').config(function ($routeProvider) {
                 return operadorasAPI.getOperadoras();
             }
         }
-    });
-    $routeProvider.when("/detalhesContato/:id", {
+    }).state("detalheContato", {
+        url: "/detalheContato",
         templateUrl: "view/detalhesContato.html",
         controller: "DetalhesContatoController",
+        params: {
+            id: 0
+        },
         resolve: {
-            contato: function (contatosAPI, $route) {
-                return contatosAPI.getContato($route.current.params.id);
+            contato: function (contatosAPI, $stateParams) {
+                return contatosAPI.getContato($stateParams.id);
             }
         }
-    });
-    $routeProvider.when("/error", {
+    }).state("error", {
+        url:"/error",
         templateUrl: "view/error.html",
     });
-    $routeProvider.otherwise({redirectTo: "/contatos"});
+
 });
